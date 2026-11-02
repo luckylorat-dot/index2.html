@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Project Lab — Advanced Project Workspace</title>
+<style>
+:root{--ink:#172033;--muted:#64748b;--line:#dbe3ee;--bg:#f5f7fb;--card:#fff;--nav:#172554;--accent:#4f46e5;--soft:#eef2ff;--ok:#166534;--warn:#92400e;--danger:#991b1b}
+*{box-sizing:border-box} body{margin:0;font:14px/1.45 Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:linear-gradient(135deg,#172554,#4338ca);color:white;padding:18px 24px;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:22px} header p{margin:3px 0 0;color:#dbeafe}
+.shell{display:grid;grid-template-columns:255px 1fr;min-height:calc(100vh - 76px)}
+aside{background:#fff;border-right:1px solid var(--line);padding:16px;position:sticky;top:76px;height:calc(100vh - 76px);overflow:auto}
+nav button{width:100%;text-align:left;border:0;background:transparent;padding:9px 10px;border-radius:8px;margin:2px 0;cursor:pointer;color:#334155}
+nav button:hover,nav button.active{background:var(--soft);color:#3730a3;font-weight:700}
+main{padding:22px;max-width:1280px;width:100%}.page{display:none}.page.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 16px;box-shadow:0 2px 10px #0f172a0a}
+h2{margin:0 0 12px;font-size:22px}h3{margin:0 0 10px;font-size:16px}.muted{color:var(--muted)}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+label{font-weight:650;display:block;margin:8px 0 5px}input,textarea,select{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:9px;background:#fff;font:inherit}
+textarea{min-height:86px;resize:vertical}.btn{border:0;border-radius:9px;padding:9px 13px;cursor:pointer;font-weight:700}.primary{background:var(--accent);color:white}.secondary{background:#e2e8f0;color:#1e293b}.danger{background:#fee2e2;color:#991b1b}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--soft);color:#3730a3;font-weight:700;font-size:12px}
+.stat{font-size:28px;font-weight:800}.progress{height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden}.progress i{display:block;height:100%;background:#4f46e5}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);padding:8px;vertical-align:top}th{background:#f8fafc;text-align:left}
+.score{width:84px}.note{padding:10px 12px;border-left:4px solid #6366f1;background:#f8faff;border-radius:6px}.warning{border-left-color:#d97706;background:#fffbeb}
+.stage{display:flex;gap:8px;flex-wrap:wrap}.stage span{padding:7px 10px;border-radius:999px;background:#e2e8f0}.stage .done{background:#dcfce7;color:#166534}
+.small{font-size:12px}.right{text-align:right}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+@media(max-width:850px){.shell{grid-template-columns:1fr}aside{position:static;height:auto}.g2,.g3{grid-template-columns:1fr}}
+@media print{header,aside,.no-print{display:none!important}.shell{display:block}main{padding:0}.page{display:block!important;page-break-after:always}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<header><h1>AI Project Lab</h1><p>Responsible generative-AI project work in English • evidence-first workflow</p></header>
+<div class="shell">
+<aside>
+<nav id="nav">
+<button data-page="dashboard" class="active">Student Dashboard</button>
+<button data-page="teacher">Teacher Dashboard</button>
+<button data-page="project">Project Setup</button>
+<hr>
+<button data-page="navigator">1. Project Navigator</button>
+<button data-page="ethics">2. AI Ethics Passport</button>
+<button data-page="creativity">3. Creativity Lab</button>
+<button data-page="prompt">4. Prompt Engineering Lab</button>
+<button data-page="detective">5. AI Output Detective</button>
+<button data-page="factcheck">6. Fact-Checking Log</button>
+<button data-page="source">7. Source Reliability Card</button>
+<button data-page="decision">8. Decision Log</button>
+<button data-page="writing">9. Writing Evolution Tracker</button>
+<button data-page="peer">10. Peer Review Sheet</button>
+<button data-page="present">11. Presentation Rehearsal & Q&A</button>
+<button data-page="declaration">12. AI Use Declaration</button>
+<hr>
+<button data-page="rubric">Analytic Rubric 0–100</button>
+<button data-page="comparability">Data Processing & Comparability</button>
+<button data-page="report">Evidence Report</button>
+</nav>
+</aside>
+<main>
+<section id="dashboard" class="page active">
+<div class="card"><h2>Project Dashboard</h2><div class="grid g3">
+<div><div class="muted">Process instruments completed</div><div class="stat" id="doneStat">0/12</div></div>
+<div><div class="muted">Composite project index</div><div class="stat" id="indexStat">—</div></div>
+<div><div class="muted">Verified claims</div><div class="stat" id="claimsStat">0</div></div>
+</div><div class="progress"><i id="bar" style="width:0%"></i></div></div>
+<div class="card"><h3>Eight-stage cycle</h3><div class="stage" id="stageStrip"></div></div>
+<div class="card note"><b>Assessment principle.</b> Scores describe the quality of the group product and recorded process evidence. Self-assessment and peer feedback are supplementary evidence; they are not independent proof of improvement.</div>
+</section>
+
+
+<section id="teacher" class="page">
+<div class="card">
+<h2>Teacher Dashboard</h2>
+<p class="muted">Monitor process evidence, assessment coverage and project progress. Scores should be interpreted together with the recorded evidence, not in isolation.</p>
+<div class="grid g3">
+<div><div class="muted">Process completion</div><div class="stat" id="tCompletion">0%</div></div>
+<div><div class="muted">Composite descriptive index</div><div class="stat" id="tComposite">—</div></div>
+<div><div class="muted">Verified claims</div><div class="stat" id="tClaims">0</div></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Eight-stage project progress</h3>
+<div class="stage" id="teacherStages"></div>
+</div>
+
+<div class="card">
+<h3>12 process instruments</h3>
+<table>
+<thead><tr><th>#</th><th>Instrument</th><th>Stage</th><th>Status</th><th>Evidence snapshot</th></tr></thead>
+<tbody id="teacherTools"></tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>Seven-indicator assessment overview</h3>
+<p class="muted">Click an evidence button to open the process instruments most closely associated with that indicator.</p>
+<table>
+<thead><tr><th>Indicator</th><th>Rater 1</th><th>Rater 2</th><th>Combined</th><th>Evidence sources</th><th>Recorded comment</th></tr></thead>
+<tbody id="teacherRubric"></tbody>
+</table>
+<div class="note"><b>Interpretation.</b> The seven indicators are equally weighted. The composite is a descriptive project-quality index, not a validated measurement model.</div>
+</div>
+
+<div class="card">
+<h3>Evidence integrity & comparability</h3>
+<div class="grid g2">
+<div>
+<p><b>Fact-checking</b></p>
+<p><span id="tFactTotal">0</span> claims recorded; <span id="tFactVerified">0</span> verified; <span id="tFactCorrected">0</span> corrected; <span id="tFactRejected">0</span> rejected.</p>
+</div>
+<div>
+<p><b>AI decision record</b></p>
+<p id="tDecisionStatus">No decision evidence recorded yet.</p>
+</div>
+</div>
+<div class="note warning"><b>Comparability caution.</b> In the pilot, G3 used structured process logs that made critical thinking and learner autonomy more visible. Equivalent process-recording forms for G1 and G2 are not available in the evidence set. This dashboard therefore displays evidence coverage but does not treat greater documentation as proof of a causal AI effect.</div>
+</div>
+
+<div class="card">
+<h3>Assessment coverage check</h3>
+<div id="teacherCoverage"></div>
+<div class="toolbar no-print">
+<button class="btn primary" onclick="goPage('rubric')">Open Analytic Rubric</button>
+<button class="btn secondary" onclick="goPage('comparability')">Open Data Processing & Comparability</button>
+<button class="btn secondary" onclick="goPage('report')">Open Evidence Report</button>
+</div>
+</div>
+</section>
+
+<section id="project" class="page"><div class="card"><h2>Project Setup</h2><div class="grid g2">
+<div><label>Project title</label><input data-save="project.title"><label>Class / group</label><input data-save="project.group"><label>Student / team code</label><input data-save="project.team"></div>
+<div><label>Teacher</label><input data-save="project.teacher"><label>Start date</label><input type="date" data-save="project.start"><label>End date</label><input type="date" data-save="project.end"></div>
+</div><label>Driving question</label><textarea data-save="project.question"></textarea></div></section>
+
+<section id="navigator" class="page tool" data-tool="navigator"><div class="card"><h2>1. Project Navigator <span class="badge">DEFINE</span></h2><p class="muted">Plan the project before using AI.</p>
+<label>Problem / challenge</label><textarea data-save="navigator.problem"></textarea><label>Project goal</label><textarea data-save="navigator.goal"></textarea><label>Final product and audience</label><textarea data-save="navigator.product"></textarea><label>Roles and responsibilities</label><textarea data-save="navigator.roles"></textarea><label>Milestones, evidence and deadlines</label><textarea data-save="navigator.plan"></textarea><label>What will count as success?</label><textarea data-save="navigator.success"></textarea><label>English skills needed</label><textarea data-save="navigator.english"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="ethics" class="page tool" data-tool="ethics"><div class="card"><h2>2. AI Ethics Passport <span class="badge">DEFINE + REFLECT</span></h2>
+<div id="ethicsChecks"></div><label>AI tools planned</label><textarea data-save="ethics.tools"></textarea><label>Information that must never be entered</label><textarea data-save="ethics.private"></textarea><label>What remains entirely our responsibility?</label><textarea data-save="ethics.responsibility"></textarea><label>End-of-project ethics reflection</label><textarea data-save="ethics.reflection"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="creativity" class="page tool" data-tool="creativity"><div class="card"><h2>3. AI or Our Idea? Creativity Lab <span class="badge">THINK</span></h2>
+<label>Our ideas before AI</label><textarea data-save="creativity.own"></textarea><label>Prompt used</label><textarea data-save="creativity.prompt"></textarea><label>AI suggestions</label><textarea data-save="creativity.ai"></textarea><label>Selected idea: ours / AI / combined; what changed and why?</label><textarea data-save="creativity.final"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="prompt" class="page tool" data-tool="prompt"><div class="card"><h2>4. Prompt Engineering Lab <span class="badge">ASK</span></h2>
+<label>Version 1: prompt + weakness</label><textarea data-save="prompt.v1"></textarea><label>Version 2: revision + reason</label><textarea data-save="prompt.v2"></textarea><label>Version 3 / best prompt</label><textarea data-save="prompt.v3"></textarea><label>What did we learn about prompting?</label><textarea data-save="prompt.learning"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="detective" class="page tool" data-tool="detective"><div class="card"><h2>5. AI Output Detective <span class="badge">CHECK</span></h2>
+<label>AI tool and prompt</label><textarea data-save="detective.context"></textarea><label>Output / claim examined</label><textarea data-save="detective.output"></textarea><label>Accuracy, support, bias, sources, language appropriateness</label><textarea data-save="detective.judgement"></textarea><label>Most questionable part and what must be verified</label><textarea data-save="detective.verify"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="factcheck" class="page tool" data-tool="factcheck"><div class="card"><h2>6. Fact-Checking Log <span class="badge">CHECK</span></h2><div id="factRows"></div>
+<button class="btn secondary no-print" onclick="addFact()">+ Add claim</button><label>Most important correction</label><textarea data-save="factcheck.correction"></textarea><label>How did fact-checking change the project?</label><textarea data-save="factcheck.change"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="source" class="page tool" data-tool="source"><div class="card"><h2>7. Source Reliability Card <span class="badge">CHECK</span></h2>
+<label>Source title / author / organisation / date / link or citation</label><textarea data-save="source.details"></textarea><label>Authority</label><textarea data-save="source.authority"></textarea><label>Currency and evidence</label><textarea data-save="source.currency"></textarea><label>Purpose / possible bias / relevance / cross-check</label><textarea data-save="source.analysis"></textarea><label>Overall decision</label><select data-save="source.decision"><option></option><option>USE</option><option>USE WITH CAUTION</option><option>DO NOT USE</option></select><label>Reason</label><textarea data-save="source.reason"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="decision" class="page tool" data-tool="decision"><div class="card"><h2>8. Decision Log <span class="badge">DECIDE</span></h2>
+<label>AI suggestion / output</label><textarea data-save="decision.output"></textarea><label>Decision</label><select data-save="decision.choice"><option></option><option>ACCEPT</option><option>EDIT</option><option>REJECT</option></select><label>Reason and what appears in final work</label><textarea data-save="decision.reason"></textarea><label>Which decision required the most critical thinking?</label><textarea data-save="decision.critical"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="writing" class="page tool" data-tool="writing"><div class="card"><h2>9. Writing Evolution Tracker <span class="badge">CREATE</span></h2>
+<label>Our original English text</label><textarea data-save="writing.original"></textarea><label>AI feedback / suggested changes</label><textarea data-save="writing.feedback"></textarea><label>Our evaluation: accept / edit / reject + reasons</label><textarea data-save="writing.evaluation"></textarea><label>Final revised version</label><textarea data-save="writing.final"></textarea><label>What improved, and which choices can we explain independently?</label><textarea data-save="writing.reflection"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="peer" class="page tool" data-tool="peer"><div class="card"><h2>10. Peer Review Sheet <span class="badge">CREATE + REFLECT</span></h2>
+<label>Two strengths</label><textarea data-save="peer.strengths"></textarea><label>Evidence question</label><textarea data-save="peer.question"></textarea><label>One actionable change</label><textarea data-save="peer.change"></textarea><label>Our response to peer feedback</label><textarea data-save="peer.response"></textarea><div class="note">Peer feedback is supplementary process evidence. It does not independently establish improved achievement.</div><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="present" class="page tool" data-tool="present"><div class="card"><h2>11. Presentation Rehearsal & Q&A <span class="badge">PRESENT</span></h2>
+<label>Target duration and key English terms</label><textarea data-save="present.plan"></textarea><label>Likely questions</label><textarea data-save="present.questions"></textarea><label>Independent answers: claim → reason → evidence → limitation</label><textarea data-save="present.answers"></textarea><label>Rehearsal notes</label><textarea data-save="present.notes"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="declaration" class="page tool" data-tool="declaration"><div class="card"><h2>12. AI Use Declaration with Final Reflection <span class="badge">REFLECT</span></h2>
+<label>AI tool(s) used</label><textarea data-save="declaration.tools"></textarea><label>Purpose: ideas / language feedback / structure / visual support / other</label><textarea data-save="declaration.purpose"></textarea><label>Major AI suggestions and our decisions</label><textarea data-save="declaration.decisions"></textarea><label>Our own contribution</label><textarea data-save="declaration.own"></textarea><label>Final reflection: what AI helped with, what we rejected, what we learned</label><textarea data-save="declaration.reflection"></textarea><button class="btn primary complete">Mark completed</button></div></section>
+
+<section id="rubric" class="page"><div class="card"><h2>Seven-Indicator Analytic Rubric <span class="badge">0–100</span></h2>
+<p>Use observable product and process evidence. The seven indicators are equally weighted (1/7 each). Enter independent ratings where two assessors are available.</p>
+<table><thead><tr><th>Indicator</th><th>Main evidence</th><th>What is assessed</th><th>Rater 1</th><th>Rater 2</th><th>Evidence / comment</th></tr></thead><tbody id="rubricBody"></tbody></table>
+<div class="grid g3" style="margin-top:14px"><div><div class="muted">Composite — Rater 1</div><div class="stat" id="r1Mean">—</div></div><div><div class="muted">Composite — Rater 2</div><div class="stat" id="r2Mean">—</div></div><div><div class="muted">Combined descriptive index</div><div class="stat" id="combinedMean">—</div></div></div>
+<div class="card" style="margin-top:14px"><h3>General performance anchors</h3><p><b>85–100:</b> strong, consistent evidence; <b>70–84:</b> secure evidence with minor gaps; <b>50–69:</b> partial or uneven evidence; <b>0–49:</b> limited evidence.</p><div class="note">The composite score is an author-developed descriptive index of project-work quality, not a validated measurement model.</div></div>
+</div></section>
+
+<section id="comparability" class="page"><div class="card"><h2>Data Processing & Assessment Comparability</h2>
+<h3>Scoring and data processing</h3><p>Each of the seven indicators is scored on a 0–100 scale. The composite score is the arithmetic mean of the seven equally weighted indicators. Equal weighting is used as a transparent descriptive procedure and should not be interpreted as a validated measurement model. Student self-assessment and peer feedback are supplementary evidence rather than independent evidence of improved performance.</p>
+<h3>Data limitations</h3><p>Only group-level results are available for the present report. Individual scores, measures of variability and evidence of baseline group comparability were not preserved. Statistical significance, effect sizes and causal effects should therefore not be calculated from these aggregate data. The available data do not permit independent reconstruction of the original scoring procedure.</p>
+<h3>Assessment comparability</h3><p>All three groups were intended to be assessed using the same seven indicators. However, G3 used structured process logs that directly documented several assessed characteristics, particularly critical thinking and learner autonomy. Equivalent process-recording forms for G1 and G2 are not available in the present evidence set. This may have given G3 an advantage in demonstrating these indicators.</p>
+<h3>Requirement for replication</h3><p>In a repeated study, all groups should have equal opportunities to demonstrate the assessed skills. Only the AI-support condition under investigation should differ. Individual ratings, assessor comments and anonymised raw data should be retained.</p>
+<div class="card warning"><b>Comparability check for a repeated study</b>
+<label><input type="checkbox" data-save="compare.sameRubric" style="width:auto"> Same seven indicators for every group</label>
+<label><input type="checkbox" data-save="compare.sameEvidence" style="width:auto"> Equivalent opportunities to provide process evidence</label>
+<label><input type="checkbox" data-save="compare.raw" style="width:auto"> Individual / rater-level scores retained</label>
+<label><input type="checkbox" data-save="compare.comments" style="width:auto"> Assessor comments retained</label>
+<label><input type="checkbox" data-save="compare.aiOnly" style="width:auto"> AI-support condition is the principal intended difference</label>
+</div></div></section>
+
+<section id="report" class="page"><div class="card"><h2>Project Evidence Report</h2><div class="toolbar no-print"><button class="btn primary" onclick="window.print()">Print / Save PDF</button><button class="btn secondary" onclick="exportJSON()">Export JSON</button><button class="btn danger" onclick="resetAll()">Reset local data</button></div><div id="reportContent"></div></div></section>
+</main></div>
+<script>
+const toolsList=['navigator','ethics','creativity','prompt','detective','factcheck','source','decision','writing','peer','present','declaration'];
+const stages=[['DEFINE',['navigator','ethics']],['THINK',['creativity']],['ASK',['prompt']],['CHECK',['detective','factcheck','source']],['DECIDE',['decision']],['CREATE',['writing','peer']],['PRESENT',['present']],['REFLECT',['declaration','ethics']]];
+const rubric=[
+['Idea originality','Initial idea record and final concept','Novelty, relevance and visible student contribution'],
+['Decision-making','Decision Log and oral defence','Justification, alternatives and consequences'],
+['Written content','Drafts and final English text','Accuracy, language range, coherence and task fulfilment'],
+['Visual presentation','Model / slides / poster','Clarity, evidence integration and purposeful design'],
+['Critical thinking','Source checks and corrections','Critical evaluation of claims, gaps and verification'],
+['Learner autonomy','Plan, roles and progress records','Initiative, responsibility and time management'],
+['Communication','Presentation and Q&A','Speech clarity, interaction and ability to answer questions']
+];
+let data=JSON.parse(localStorage.getItem('aiplab_v2')||'{}'); data.completed=data.completed||{}; data.facts=data.facts||[{claim:'',source:'',shows:'',verdict:''}]; data.rubric=data.rubric||rubric.map(()=>({r1:'',r2:'',comment:''}));
+function pathSet(path,val){let o=data,p=path.split('.'); for(let i=0;i<p.length-1;i++)o=o[p[i]]||(o[p[i]]={}); o[p.at(-1)]=val;save()}
+function pathGet(path){return path.split('.').reduce((o,k)=>o?.[k],data)}
+function save(){localStorage.setItem('aiplab_v2',JSON.stringify(data)); update()}
+function bind(){
+document.querySelectorAll('[data-save]').forEach(el=>{let v=pathGet(el.dataset.save); if(el.type==='checkbox')el.checked=!!v; else if(v!==undefined)el.value=v; el.oninput=()=>pathSet(el.dataset.save,el.type==='checkbox'?el.checked:el.value)});
+document.querySelectorAll('.complete').forEach(b=>{let t=b.closest('.tool').dataset.tool;b.textContent=data.completed[t]?'Completed ✓':'Mark completed';b.onclick=()=>{data.completed[t]=!data.completed[t];save();bind()}});
+}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>goPage(b.dataset.page));
+document.getElementById('ethicsChecks').innerHTML=['No personal/confidential data','AI supports thinking, not replacement','Important factual claims are checked','Own ideas distinguished from AI suggestions','AI contribution disclosed','Major prompts/checks/decisions/revisions retained'].map((x,i)=>`<label><input type="checkbox" style="width:auto" data-save="ethics.c${i}"> ${x}</label>`).join('');
+function renderFacts(){document.getElementById('factRows').innerHTML=`<table><thead><tr><th>Claim</th><th>Verification source</th><th>What source shows</th><th>Verdict</th></tr></thead><tbody>${data.facts.map((r,i)=>`<tr><td><textarea oninput="fact(${i},'claim',this.value)">${r.claim}</textarea></td><td><textarea oninput="fact(${i},'source',this.value)">${r.source}</textarea></td><td><textarea oninput="fact(${i},'shows',this.value)">${r.shows}</textarea></td><td><select onchange="fact(${i},'verdict',this.value)"><option></option>${['verified','corrected','rejected'].map(v=>`<option ${r.verdict===v?'selected':''}>${v}</option>`).join('')}</select></td></tr>`).join('')}</tbody></table>`}
+function fact(i,k,v){data.facts[i][k]=v;save()} function addFact(){data.facts.push({claim:'',source:'',shows:'',verdict:''});save();renderFacts()}
+function renderRubric(){document.getElementById('rubricBody').innerHTML=rubric.map((r,i)=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td><input class="score" type="number" min="0" max="100" value="${data.rubric[i].r1}" oninput="rub(${i},'r1',this.value)"></td><td><input class="score" type="number" min="0" max="100" value="${data.rubric[i].r2}" oninput="rub(${i},'r2',this.value)"></td><td><textarea oninput="rub(${i},'comment',this.value)">${data.rubric[i].comment}</textarea></td></tr>`).join('');calcRubric()}
+function rub(i,k,v){data.rubric[i][k]=v;save();calcRubric()} function mean(k){let a=data.rubric.map(x=>Number(x[k])).filter(x=>Number.isFinite(x)&&x>=0&&x<=100&&String(x)!=='');return a.length===7?a.reduce((a,b)=>a+b,0)/7:null}
+function calcRubric(){let a=mean('r1'),b=mean('r2');let c=a!=null&&b!=null?(a+b)/2:(a??b);document.getElementById('r1Mean').textContent=a==null?'—':a.toFixed(1);document.getElementById('r2Mean').textContent=b==null?'—':b.toFixed(1);document.getElementById('combinedMean').textContent=c==null?'—':c.toFixed(1);document.getElementById('indexStat').textContent=c==null?'—':c.toFixed(1)}
+
+const toolNames={
+navigator:'Project Navigator',ethics:'AI Ethics Passport',creativity:'AI or Our Idea? Creativity Lab',
+prompt:'Prompt Engineering Lab',detective:'AI Output Detective',factcheck:'Fact-Checking Log',
+source:'Source Reliability Card',decision:'Decision Log',writing:'Writing Evolution Tracker',
+peer:'Peer Review Sheet',present:'Presentation Rehearsal & Q&A',declaration:'AI Use Declaration with Final Reflection'
+};
+const toolStage={navigator:'DEFINE',ethics:'DEFINE / REFLECT',creativity:'THINK',prompt:'ASK',detective:'CHECK',factcheck:'CHECK',source:'CHECK',decision:'DECIDE',writing:'CREATE',peer:'CREATE / REFLECT',present:'PRESENT',declaration:'REFLECT'};
+const evidenceLinks=[
+['creativity','Idea originality'],
+['decision','Decision-making'],
+['writing','Written content'],
+['navigator','Visual presentation'],
+['detective,factcheck,source','Critical thinking'],
+['navigator,decision','Learner autonomy'],
+['present','Communication']
+];
+function goPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
+ if(id==='teacher') renderTeacher();
+ if(id==='report') renderReport();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function evidenceSnippet(t){
+ const maps={
+ navigator:['navigator.problem','navigator.goal','navigator.roles'],
+ ethics:['ethics.tools','ethics.reflection'],
+ creativity:['creativity.own','creativity.final'],
+ prompt:['prompt.v1','prompt.v3'],
+ detective:['detective.judgement','detective.verify'],
+ factcheck:['factcheck.correction','factcheck.change'],
+ source:['source.decision','source.reason'],
+ decision:['decision.choice','decision.reason'],
+ writing:['writing.original','writing.final'],
+ peer:['peer.strengths','peer.response'],
+ present:['present.answers','present.notes'],
+ declaration:['declaration.purpose','declaration.reflection']
+ };
+ let vals=(maps[t]||[]).map(pathGet).filter(v=>String(v||'').trim());
+ if(t==='factcheck' && data.facts.some(x=>x.claim)) vals.unshift(data.facts.filter(x=>x.claim).length+' claim(s)');
+ let z=vals.join(' • ');
+ return z ? (z.length>120?z.slice(0,117)+'…':z) : 'No evidence recorded yet';
+}
+function combinedFor(i){
+ let a=Number(data.rubric[i].r1),b=Number(data.rubric[i].r2);
+ let av=String(data.rubric[i].r1).trim()!==''&&a>=0&&a<=100, bv=String(data.rubric[i].r2).trim()!==''&&b>=0&&b<=100;
+ if(av&&bv)return ((a+b)/2).toFixed(1); if(av)return a.toFixed(1); if(bv)return b.toFixed(1); return '—';
+}
+function renderTeacher(){
+ let n=toolsList.filter(t=>data.completed[t]).length,pct=Math.round(n/12*100);
+ let a=mean('r1'),b=mean('r2'),comp=a!=null&&b!=null?(a+b)/2:(a??b);
+ document.getElementById('tCompletion').textContent=pct+'%';
+ document.getElementById('tComposite').textContent=comp==null?'—':comp.toFixed(1);
+ let facts=data.facts.filter(x=>x.claim||x.verdict), ver=facts.filter(x=>x.verdict==='verified').length, cor=facts.filter(x=>x.verdict==='corrected').length, rej=facts.filter(x=>x.verdict==='rejected').length;
+ document.getElementById('tClaims').textContent=ver;
+ document.getElementById('tFactTotal').textContent=facts.length;document.getElementById('tFactVerified').textContent=ver;document.getElementById('tFactCorrected').textContent=cor;document.getElementById('tFactRejected').textContent=rej;
+ document.getElementById('teacherStages').innerHTML=stages.map(([st,ts])=>`<span class="${ts.every(t=>data.completed[t])?'done':''}">${ts.every(t=>data.completed[t])?'✓ ':''}${st}</span>`).join('');
+ document.getElementById('teacherTools').innerHTML=toolsList.map((t,i)=>`<tr><td>${i+1}</td><td><b>${toolNames[t]}</b></td><td>${toolStage[t]}</td><td>${data.completed[t]?'<span style="color:var(--ok);font-weight:700">Completed ✓</span>':'In progress'}</td><td>${evidenceSnippet(t)}</td></tr>`).join('');
+ document.getElementById('teacherRubric').innerHTML=rubric.map((r,i)=>{
+   let ids=evidenceLinks[i][0].split(',');
+   let buttons=ids.map(id=>`<button class="btn secondary no-print" style="padding:5px 7px;margin:2px" onclick="goPage('${id}')">${toolNames[id]}</button>`).join('');
+   return `<tr><td><b>${r[0]}</b><div class="small muted">${r[2]}</div></td><td>${data.rubric[i].r1||'—'}</td><td>${data.rubric[i].r2||'—'}</td><td><b>${combinedFor(i)}</b></td><td>${buttons}</td><td>${data.rubric[i].comment||'<span class="muted">No assessor comment</span>'}</td></tr>`;
+ }).join('');
+ let decision=pathGet('decision.choice'), reason=pathGet('decision.reason');
+ document.getElementById('tDecisionStatus').innerHTML=decision?`<b>${decision}</b>${reason?' — '+reason:''}`:'No decision evidence recorded yet.';
+ document.getElementById('teacherCoverage').innerHTML=rubric.map((r,i)=>{
+   let ids=evidenceLinks[i][0].split(','), has=ids.some(id=>evidenceSnippet(id)!=='No evidence recorded yet');
+   let scored=combinedFor(i)!=='—';
+   return `<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>${has?'✓':'○'} ${r[0]}</b> — process evidence: ${has?'present':'not yet recorded'}; assessor score: ${scored?'present':'not yet entered'}.</div>`;
+ }).join('');
+}
+
+function update(){let n=toolsList.filter(t=>data.completed[t]).length;document.getElementById('doneStat').textContent=`${n}/12`;document.getElementById('bar').style.width=(n/12*100)+'%';document.getElementById('claimsStat').textContent=data.facts.filter(x=>x.verdict==='verified').length;document.getElementById('stageStrip').innerHTML=stages.map(([s,ts])=>`<span class="${ts.every(t=>data.completed[t])?'done':''}">${s}</span>`).join('');calcRubric(); if(document.getElementById('teacher').classList.contains('active'))renderTeacher()}
+function renderReport(){let c=mean('r1'),d=mean('r2'),m=c!=null&&d!=null?(c+d)/2:(c??d);document.getElementById('reportContent').innerHTML=`<h3>${pathGet('project.title')||'Untitled project'}</h3><p><b>Group:</b> ${pathGet('project.group')||'—'} &nbsp; <b>Team:</b> ${pathGet('project.team')||'—'}</p><p><b>Driving question:</b> ${pathGet('project.question')||'—'}</p><h3>Process completion</h3><p>${toolsList.filter(t=>data.completed[t]).length}/12 instruments completed.</p><h3>Analytic assessment</h3><table><tr><th>Indicator</th><th>Rater 1</th><th>Rater 2</th><th>Evidence/comment</th></tr>${rubric.map((r,i)=>`<tr><td>${r[0]}</td><td>${data.rubric[i].r1||'—'}</td><td>${data.rubric[i].r2||'—'}</td><td>${data.rubric[i].comment||''}</td></tr>`).join('')}</table><p><b>Composite descriptive index:</b> ${m==null?'—':m.toFixed(1)} / 100</p><div class="note"><b>Interpretation:</b> The composite is an equally weighted descriptive index, not a validated measurement model. Self- and peer assessment are supplementary evidence. Group-level aggregate data alone do not justify statistical significance, effect-size or causal claims.</div><h3>Comparability note</h3><p>G3 structured logs may make critical thinking and learner autonomy more visible than in groups without equivalent process-recording forms. In replication, all groups should have equal opportunities to demonstrate assessed skills.</p>`}
+function exportJSON(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='AI_Project_Lab_Project_Data.json';a.click();URL.revokeObjectURL(a.href)}
+function resetAll(){if(confirm('Delete all locally saved project data?')){localStorage.removeItem('aiplab_v2');location.reload()}}
+renderFacts();renderRubric();bind();update();
+</script>
+</body></html>
